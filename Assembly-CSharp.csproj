@@ -60,19 +60,19 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.58f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Coin.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\InputReader.cs" />
-    <Compile Include="Assets\Scripts\Flipper2D.cs" />
-    <Compile Include="Assets\Scripts\MoverOnPoints.cs" />
-    <Compile Include="Assets\Scripts\Mover2D.cs" />
-    <Compile Include="Assets\Scripts\Wallet.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\SpawnerEnemy.cs" />
-    <Compile Include="Assets\Scripts\PointSpawnEnemy.cs" />
+    <Compile Include="Assets\Scripts\Player\GroundDetector.cs" />
+    <Compile Include="Assets\Scripts\Items\Coin.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Spawners\PointSpawnEnemy.cs" />
+    <Compile Include="Assets\Scripts\Movers\Mover2D.cs" />
+    <Compile Include="Assets\Scripts\Spawners\SpawnerCoin.cs" />
+    <Compile Include="Assets\Scripts\Player\InputReader.cs" />
+    <Compile Include="Assets\Scripts\Characters\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Spawners\SpawnerEnemy.cs" />
+    <Compile Include="Assets\Scripts\Movers\MoverOnPoints.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimatorData.cs" />
-    <Compile Include="Assets\Scripts\GroundDetector.cs" />
-    <Compile Include="Assets\Scripts\SpawnerCoin.cs" />
+    <Compile Include="Assets\Scripts\Player\Wallet.cs" />
+    <Compile Include="Assets\Scripts\Movers\Flipper2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
