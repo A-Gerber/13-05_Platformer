@@ -1,22 +1,26 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(Mover2D), typeof(InputHandler))]
-[RequireComponent(typeof(Jumper))]
+[RequireComponent(typeof(Animator), typeof(Mover2D), typeof(InputReader))]
+[RequireComponent(typeof(GroundDetector), typeof(Flipper2D), typeof(Wallet))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _maxSpeed = 6.0f;
+    [SerializeField] private float _maxSpeed = 3.0f;
 
     private Animator _animator;
     private Mover2D _mover;
-    private InputHandler _inputHandler;
-    private Jumper _jumper;
+    private InputReader _inputReader;
+    private GroundDetector _groundDetector;
+    private Flipper2D _flipper;
+    private Wallet _wallet;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _mover = GetComponent<Mover2D>();
-        _inputHandler = GetComponent<InputHandler>();
-        _jumper = GetComponent<Jumper>();
+        _inputReader = GetComponent<InputReader>();
+        _groundDetector = GetComponent<GroundDetector>();
+        _flipper = GetComponent<Flipper2D>();
+        _wallet = GetComponent<Wallet>();
     }
 
     private void Start()
@@ -24,25 +28,19 @@ public class Player : MonoBehaviour
         _mover.SetSpeed(_maxSpeed);
     }
 
+    private void FixedUpdate()
+    {
+        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
+        {
+            _mover.Jump();
+        }
+    }
+
     private void Update()
     {
-        _mover.SetDirection(_inputHandler.Direction);
+        _mover.Move(_inputReader.Direction);
+        _flipper.SetDirection(_inputReader.Direction);
 
-        _animator.SetFloat(PlayerAnimatorData.Params.Speed, Mathf.Abs(_maxSpeed * _inputHandler.Direction));
-    }
-
-    private void OnEnable()
-    {
-        _inputHandler.Jumped += Jump;
-    }
-
-    private void OnDisable()
-    {
-        _inputHandler.Jumped -= Jump;
-    }
-
-    private void Jump()
-    {
-        _jumper.Jump();
+        _animator.SetFloat(PlayerAnimatorData.Params.Speed, Mathf.Abs(_maxSpeed * _inputReader.Direction));
     }
 }

@@ -1,32 +1,31 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Mover2D : MonoBehaviour
 {
     private Vector2 _defaultDirection = Vector2.right;
     private float _speed = 0.0f;
-    private float _direction = 1;
+    [SerializeField ] private float _jumpForce = 250f;
+    private Rigidbody2D _rigidbody;
 
-    private void Update()
+    private void Awake()
     {
-        transform.Translate(_defaultDirection * _direction * _speed * Time.deltaTime);
-
-        if (_direction > 0)
-        {
-            transform.localScale = new Vector2(1, 1);
-        }
-        else if (_direction < 0)
-        {
-            transform.localScale = new Vector2(-1, 1);
-        }
-    }
-
-    public void SetDirection(float direction)
-    {
-        _direction = direction;
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     public void SetSpeed(float maxSpeed)
     {
         _speed = maxSpeed;
+    }
+
+    public void Move(float direction)
+    {
+        transform.Translate(_defaultDirection * Mathf.Abs(direction) * _speed * Time.deltaTime);
+    }
+
+    public void Jump()
+    {
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
+        _rigidbody.AddForce(new Vector2(0, _jumpForce));
     }
 }

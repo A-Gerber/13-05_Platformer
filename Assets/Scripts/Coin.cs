@@ -7,7 +7,7 @@ public class Coin : MonoBehaviour
     private CircleCollider2D  _circleCollider;
     private float _radiusCollider = 0.35f;
 
-    public event Action<Coin> PickedUp;
+    public event Action<Coin> PickedUpCoin;
 
     private void Awake()
     {
@@ -17,11 +17,8 @@ public class Coin : MonoBehaviour
         _circleCollider.radius = _radiusCollider;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void  SendToPool ()
     {
-        if (collision.gameObject.TryGetComponent<Player>(out _))
-        {
-            PickedUp?.Invoke(this);
-        }
+        PickedUpCoin?.Invoke(this);
     }
 }

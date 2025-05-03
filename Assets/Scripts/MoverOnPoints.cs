@@ -2,26 +2,17 @@ using UnityEngine;
 
 public class MoverOnPoints : MonoBehaviour
 {
-    private Transform[] _points;
+    [SerializeField] private Transform[] _points;
+
     private int _currentNumber;
     private int _startNumber = 0;
     private float _speedWalk = 0f;
     private float _closeDistance = 0.2f;
+    private float _direction = 0f;
 
     private void Awake()
     {
         _currentNumber = _startNumber;
-    }
-
-    public void Init(float speedWalk, Transform route)
-    {
-        _speedWalk = speedWalk;
-        _points = new Transform[route.childCount];
-
-        for (int i = 0; i < route.childCount; i++)
-        {
-            _points[i] = route.GetChild(i);
-        }
     }
 
     public void Move ()
@@ -32,19 +23,26 @@ public class MoverOnPoints : MonoBehaviour
             _currentNumber = ++_currentNumber % _points.Length;
 
         transform.position = Vector2.MoveTowards(transform.position, _points[_currentNumber].position, _speedWalk * Time.deltaTime);
+        _direction = offset.x;
+    }
 
-        if (offset.x < 0)
-        {
-            transform.localScale = new Vector2(1, 1);
-        }
-        else if (offset.x > 0)
-        {
-            transform.localScale = new Vector2(-1, 1);
-        }
+    public void Init(float speedWalk)
+    {
+        _speedWalk = speedWalk;
+    }
+
+    public void SetRoute(Transform[] points)
+    {
+        _points = points;
     }
 
     public void ResetMover()
     {
         _currentNumber = _startNumber;
+    }
+
+    public float GetDirection()
+    {
+        return _direction;
     }
 }

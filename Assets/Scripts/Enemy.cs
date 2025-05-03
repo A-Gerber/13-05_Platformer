@@ -1,31 +1,32 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(MoverOnPoints))]
+[RequireComponent(typeof(Animator), typeof(MoverOnPoints), typeof(Flipper2D))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speedWalk = 0.5f;
-    [SerializeField] private Transform _route;
 
     private Animator _animator;
+    private Flipper2D _flipper;
 
     public MoverOnPoints MoverOnPoints { get; private set; }
     public Vector3 Birthplace { get; private set; }
-
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         MoverOnPoints = GetComponent<MoverOnPoints>();
+        _flipper = GetComponent<Flipper2D>();
     }
 
     private void Start()
     {
-        MoverOnPoints.Init(_speedWalk, _route);
+        MoverOnPoints.Init(_speedWalk);
     }
 
     private void Update()
     {
         MoverOnPoints.Move();
+        _flipper.SetDirection(MoverOnPoints.GetDirection());
 
         _animator.SetFloat(PlayerAnimatorData.Params.Speed, _speedWalk);
     }
@@ -33,10 +34,5 @@ public class Enemy : MonoBehaviour
     public void SetBirthplace(Vector3 position)
     {
         Birthplace = position;
-    }
-
-    public void TakeRoute(Transform route)
-    {
-        _route = route;
     }
 }

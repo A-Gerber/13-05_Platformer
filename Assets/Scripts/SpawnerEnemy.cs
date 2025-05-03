@@ -6,7 +6,7 @@ public class SpawnerEnemy : MonoBehaviour
 {
     [SerializeField] private PointSpawnEnemy[] _pointsSpawn;
     [SerializeField] private int _maxCountEnemy = 4;
-    [SerializeField] private float _repeatRate = 30.0f;
+    [SerializeField] private float _repeatRate = 20.0f;
     [SerializeField] private int _poolCapacity = 6;
     [SerializeField] private int _poolMaxSize = 6;
 
@@ -21,8 +21,8 @@ public class SpawnerEnemy : MonoBehaviour
     {
         _pool = new ObjectPool<Enemy>(
             createFunc: () => CreateEnemy(),
-            actionOnGet: (enemy) => ActWhenGet(enemy),
-            actionOnRelease: (enemy) => ActWhenRelease(enemy),
+            actionOnGet: (enemy) => DoWhenGet(enemy),
+            actionOnRelease: (enemy) => DoWhenRelease(enemy),
             actionOnDestroy: (enemy) => Destroy(enemy),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
@@ -52,13 +52,13 @@ public class SpawnerEnemy : MonoBehaviour
         return enemy;
     }
 
-    private void ActWhenRelease(Enemy enemy)
+    private void DoWhenRelease(Enemy enemy)
     {
         enemy.MoverOnPoints.ResetMover();
         enemy.gameObject.SetActive(false);
     }
 
-    private void ActWhenGet(Enemy enemy)
+    private void DoWhenGet(Enemy enemy)
     {
         enemy.transform.position = enemy.Birthplace;
         enemy.gameObject.SetActive(true);

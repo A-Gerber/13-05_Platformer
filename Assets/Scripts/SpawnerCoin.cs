@@ -5,20 +5,19 @@ using UnityEngine.Pool;
 public class SpawnerCoin : MonoBehaviour
 {
     [SerializeField] private Coin _prefab;
-    [SerializeField] private Transform _spawnPoints;
     [SerializeField] private int _maxCountCoin = 5;
     [SerializeField] private int _poolCapacity = 5;
     [SerializeField] private int _poolMaxSize = 5;
+    [SerializeField] private List<Transform> _points;
 
-    private List<Transform> _points;
     private ObjectPool<Coin> _pool;
 
     private void Awake()
     {
         _pool = new ObjectPool<Coin>(
             createFunc: () => Instantiate(_prefab),
-            actionOnGet: (enemy) => ActWhenGet(enemy),
-            actionOnRelease: (enemy) => ActWhenRelease(enemy),
+            actionOnGet: (enemy) => DoWhenGet(enemy),
+            actionOnRelease: (enemy) => DoWhenRelease(enemy),
             actionOnDestroy: (enemy) => Destroy(enemy),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
@@ -26,34 +25,38 @@ public class SpawnerCoin : MonoBehaviour
     }
 
     private void Start()
-    {
-        _points = new List<Transform>();
-
-        for (int i = 0; i < _spawnPoints.childCount; i++)
-        {
-            _points.Add( _spawnPoints.GetChild(i));
-        }
-
+    {      
         for (int i = 0; i < _maxCountCoin; i++)
         {
             GetCoin();
         }
     }
 
-    private void ActWhenRelease(Coin coin)
+#if UNITY_EDITOR
+    [ContextMenu("Refresh Child Array")]
+    private void RefreshChildArray()
+    {
+        _points = new List<Transform>();
+
+        for (int i = 0; i < transform.childCount; i++)
+            _points.Add(transform.GetChild(i));
+    }
+#endif
+
+    private void DoWhenRelease(Coin coin)
     {
         coin.gameObject.SetActive(false);
-        coin.PickedUp -= ReleaseCoin;
+        coin.PickedUpCoin -= ReleaseCoin;
     }
 
-    private void ActWhenGet(Coin coin)
+    private void DoWhenGet(Coin coin)
     {
         int randomNumber = UnityEngine.Random.Range(0, _points.Count);
         coin.transform.position = _points[randomNumber].position;
         _points.RemoveAt(randomNumber);
 
         coin.gameObject.SetActive(true);
-        coin.PickedUp += ReleaseCoin;
+        coin.PickedUpCoin += ReleaseCoin;
     }
 
     private void GetCoin()
