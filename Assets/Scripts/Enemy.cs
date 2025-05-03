@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         MoverOnPoints.Move();
-        _flipper.SetDirection(MoverOnPoints.GetDirection());
+        _flipper.SetDirection(MoverOnPoints.Direction);
 
         _animator.SetFloat(PlayerAnimatorData.Params.Speed, _speedWalk);
     }

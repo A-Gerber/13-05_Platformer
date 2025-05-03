@@ -4,26 +4,27 @@ public class MoverOnPoints : MonoBehaviour
 {
     [SerializeField] private Transform[] _points;
 
-    private int _currentNumber;
-    private int _startNumber = 0;
+    private int _currentIndex;
+    private int _startIndex = 0;
     private float _speedWalk = 0f;
     private float _closeDistance = 0.2f;
-    private float _direction = 0f;
+
+    public float Direction { get; private set; } = 0f;
 
     private void Awake()
     {
-        _currentNumber = _startNumber;
+        _currentIndex = _startIndex;
     }
 
     public void Move ()
     {
-        Vector2 offset = _points[_currentNumber].transform.position - transform.position;
+        Vector2 offset = _points[_currentIndex].transform.position - transform.position;
 
         if (offset.sqrMagnitude < _closeDistance * _closeDistance)
-            _currentNumber = ++_currentNumber % _points.Length;
+            _currentIndex = ++_currentIndex % _points.Length;
 
-        transform.position = Vector2.MoveTowards(transform.position, _points[_currentNumber].position, _speedWalk * Time.deltaTime);
-        _direction = offset.x;
+        transform.position = Vector2.MoveTowards(transform.position, _points[_currentIndex].position, _speedWalk * Time.deltaTime);
+        Direction = offset.x;
     }
 
     public void Init(float speedWalk)
@@ -38,11 +39,6 @@ public class MoverOnPoints : MonoBehaviour
 
     public void ResetMover()
     {
-        _currentNumber = _startNumber;
-    }
-
-    public float GetDirection()
-    {
-        return _direction;
+        _currentIndex = _startIndex;
     }
 }
