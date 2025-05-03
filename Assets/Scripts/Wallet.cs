@@ -8,7 +8,7 @@ public class Wallet : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Coin coin))
         {
-            coin.SendToPool();
+            coin.PickUp();
             _countCoins++;
         }
     }

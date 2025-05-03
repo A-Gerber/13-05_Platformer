@@ -16,8 +16,8 @@ public class SpawnerCoin : MonoBehaviour
     {
         _pool = new ObjectPool<Coin>(
             createFunc: () => Instantiate(_prefab),
-            actionOnGet: (enemy) => DoWhenGet(enemy),
-            actionOnRelease: (enemy) => DoWhenRelease(enemy),
+            actionOnGet: (enemy) => OnGet(enemy),
+            actionOnRelease: (enemy) => OnRelease(enemy),
             actionOnDestroy: (enemy) => Destroy(enemy),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
@@ -43,20 +43,20 @@ public class SpawnerCoin : MonoBehaviour
     }
 #endif
 
-    private void DoWhenRelease(Coin coin)
+    private void OnRelease(Coin coin)
     {
         coin.gameObject.SetActive(false);
-        coin.PickedUpCoin -= ReleaseCoin;
+        coin.PickedUp -= ReleaseCoin;
     }
 
-    private void DoWhenGet(Coin coin)
+    private void OnGet(Coin coin)
     {
         int randomNumber = UnityEngine.Random.Range(0, _points.Count);
         coin.transform.position = _points[randomNumber].position;
         _points.RemoveAt(randomNumber);
 
         coin.gameObject.SetActive(true);
-        coin.PickedUpCoin += ReleaseCoin;
+        coin.PickedUp += ReleaseCoin;
     }
 
     private void GetCoin()

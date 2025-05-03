@@ -21,8 +21,8 @@ public class SpawnerEnemy : MonoBehaviour
     {
         _pool = new ObjectPool<Enemy>(
             createFunc: () => CreateEnemy(),
-            actionOnGet: (enemy) => DoWhenGet(enemy),
-            actionOnRelease: (enemy) => DoWhenRelease(enemy),
+            actionOnGet: (enemy) => OnGet(enemy),
+            actionOnRelease: (enemy) => OnRelease(enemy),
             actionOnDestroy: (enemy) => Destroy(enemy),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
@@ -52,13 +52,13 @@ public class SpawnerEnemy : MonoBehaviour
         return enemy;
     }
 
-    private void DoWhenRelease(Enemy enemy)
+    private void OnRelease(Enemy enemy)
     {
         enemy.MoverOnPoints.ResetMover();
         enemy.gameObject.SetActive(false);
     }
 
-    private void DoWhenGet(Enemy enemy)
+    private void OnGet(Enemy enemy)
     {
         enemy.transform.position = enemy.Birthplace;
         enemy.gameObject.SetActive(true);

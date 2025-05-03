@@ -3,9 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover2D : MonoBehaviour
 {
+    [SerializeField ] private float _jumpForce = 250f;
+
     private Vector2 _defaultDirection = Vector2.right;
     private float _speed = 0.0f;
-    [SerializeField ] private float _jumpForce = 250f;
     private Rigidbody2D _rigidbody;
 
     private void Awake()
