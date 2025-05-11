@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Mover2D), typeof(InputReader))]
-[RequireComponent(typeof(GroundDetector), typeof(Flipper2D), typeof(Wallet))]
+[RequireComponent(typeof(GroundDetector), typeof(Flipper2D), typeof(Inventory))]
+[RequireComponent(typeof(ItemsPicker), typeof(Health), typeof(AttackerPlayer))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed = 3.0f;
@@ -11,7 +13,14 @@ public class Player : MonoBehaviour
     private InputReader _inputReader;
     private GroundDetector _groundDetector;
     private Flipper2D _flipper;
-    private Wallet _wallet;
+    private Inventory _inventory;
+    private ItemsPicker _itemsPicker;
+    private AttackerPlayer _attackerPlayer;
+
+    private float _timeOfAttack = 0.22f;
+    private WaitForSeconds _wait;
+    
+    public Health Health { get; private set; }
 
     private void Awake()
     {
@@ -20,20 +29,35 @@ public class Player : MonoBehaviour
         _inputReader = GetComponent<InputReader>();
         _groundDetector = GetComponent<GroundDetector>();
         _flipper = GetComponent<Flipper2D>();
-        _wallet = GetComponent<Wallet>();
+        _inventory = GetComponent<Inventory>();
+        _itemsPicker = GetComponent<ItemsPicker>();
+        Health = GetComponent<Health>();
+        _attackerPlayer = GetComponent<AttackerPlayer>();
+
+        _wait = new WaitForSeconds(_timeOfAttack);
+    }
+
+    private void OnEnable()
+    {
+        _itemsPicker.PickUpedCoin += AddCoin;
+        _itemsPicker.PickUpedFirstAndKit += Heal;
+
+        _inputReader.Attacked += Attack;
+        _inputReader.Jumped += Jump;
+    }
+
+    private void OnDisable()
+    {
+        _itemsPicker.PickUpedCoin -= AddCoin;
+        _itemsPicker.PickUpedFirstAndKit -= Heal;
+
+        _inputReader.Attacked -= Attack;
+        _inputReader.Jumped -= Jump;
     }
 
     private void Start()
     {
         _mover.SetSpeed(_maxSpeed);
-    }
-
-    private void FixedUpdate()
-    {
-        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
-        {
-            _mover.Jump();
-        }
     }
 
     private void Update()
@@ -42,5 +66,37 @@ public class Player : MonoBehaviour
         _flipper.SetDirection(_inputReader.Direction);
 
         _animator.SetFloat(PlayerAnimatorData.Params.Speed, Mathf.Abs(_maxSpeed * _inputReader.Direction));
+    }
+
+    private void Attack()
+    {
+        _attackerPlayer.SetAttack(true);
+        _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
+        StartCoroutine(StopAnimationOverTime());
+    }
+
+    private IEnumerator StopAnimationOverTime()
+    {
+        yield return _wait;
+        _attackerPlayer.SetAttack(false);
+        _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
+    }
+
+    private void Jump()
+    {
+        if(_groundDetector.IsGround)
+        {
+            _mover.Jump();
+        }
+    }
+
+    private void Heal(float healing)
+    {
+        Health.Heal(healing);
+    }
+
+    private void AddCoin()
+    {
+        _inventory.AddCoin();
     }
 }

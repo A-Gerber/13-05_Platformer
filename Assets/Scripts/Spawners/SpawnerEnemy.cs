@@ -5,8 +5,9 @@ using UnityEngine.Pool;
 public class SpawnerEnemy : MonoBehaviour
 {
     [SerializeField] private PointSpawnEnemy[] _pointsSpawn;
-    [SerializeField] private int _maxCountEnemy = 4;
-    [SerializeField] private float _repeatRate = 20.0f;
+    [SerializeField] private int _maxCountEnemy = 8;
+    [SerializeField] private int _startCountEnemy = 3;
+    [SerializeField] private float _repeatRate = 10.0f;
     [SerializeField] private int _poolCapacity = 6;
     [SerializeField] private int _poolMaxSize = 6;
 
@@ -44,6 +45,14 @@ public class SpawnerEnemy : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        for (int i = 0; i < _startCountEnemy; i++)
+        {
+            GetEnemy();
+        }
+    }
+
     private Enemy CreateEnemy()
     {
         Enemy enemy = _pointsSpawn[_queueNumber % _pointsSpawn.Length].CreateEnemy();
@@ -55,13 +64,18 @@ public class SpawnerEnemy : MonoBehaviour
     private void OnRelease(Enemy enemy)
     {
         enemy.MoverOnPoints.ResetMover();
+        enemy.Health.ResetCount();
         enemy.gameObject.SetActive(false);
+
+        enemy.Died -= ReleaseEnemy;
     }
 
     private void OnGet(Enemy enemy)
     {
         enemy.transform.position = enemy.Birthplace;
         enemy.gameObject.SetActive(true);
+
+        enemy.Died += ReleaseEnemy;
     }
 
     private void GetEnemy()
@@ -70,12 +84,17 @@ public class SpawnerEnemy : MonoBehaviour
         _countEnemy++;
     }
 
+    private void ReleaseEnemy(Enemy enemy)
+    {
+        _pool.Release(enemy);
+    }
+
     private IEnumerator GetEnemyOverTime()
     {
         while (_countEnemy != _maxCountEnemy)
         {
-            GetEnemy();
             yield return _wait;
+            GetEnemy();
         }
     }
 }

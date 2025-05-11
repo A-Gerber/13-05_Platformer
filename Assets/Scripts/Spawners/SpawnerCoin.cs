@@ -16,9 +16,9 @@ public class SpawnerCoin : MonoBehaviour
     {
         _pool = new ObjectPool<Coin>(
             createFunc: () => Instantiate(_prefab),
-            actionOnGet: (enemy) => OnGet(enemy),
-            actionOnRelease: (enemy) => OnRelease(enemy),
-            actionOnDestroy: (enemy) => Destroy(enemy),
+            actionOnGet: (coin) => OnGet(coin),
+            actionOnRelease: (coin) => OnRelease(coin),
+            actionOnDestroy: (coin) => Destroy(coin),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
             maxSize: _poolMaxSize);

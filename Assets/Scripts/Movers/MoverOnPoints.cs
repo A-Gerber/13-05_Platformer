@@ -6,10 +6,10 @@ public class MoverOnPoints : MonoBehaviour
 
     private int _currentIndex;
     private int _startIndex = 0;
-    private float _speedWalk = 0f;
-    private float _closeDistance = 0.2f;
+    private float _closeDistance = 0.5f;
 
     public float Direction { get; private set; } = 0f;
+    public float Speed { get; private set; } = 0f;
 
     private void Awake()
     {
@@ -18,18 +18,27 @@ public class MoverOnPoints : MonoBehaviour
 
     public void Move ()
     {
-        Vector2 offset = _points[_currentIndex].transform.position - transform.position;
-
-        if (offset.sqrMagnitude < _closeDistance * _closeDistance)
+        if (CalculateOffset(_points[_currentIndex]).sqrMagnitude < _closeDistance * _closeDistance)
+        {
             _currentIndex = ++_currentIndex % _points.Length;
+        }
 
-        transform.position = Vector2.MoveTowards(transform.position, _points[_currentIndex].position, _speedWalk * Time.deltaTime);
-        Direction = offset.x;
+        transform.position = Vector2.MoveTowards(transform.position, _points[_currentIndex].position, Speed * Time.deltaTime);
+    }
+
+    public void FollowTarget(Player target)
+    {
+        if (CalculateOffset(target.transform).sqrMagnitude < _closeDistance * _closeDistance)
+        {
+            return;
+        }
+
+        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Speed * Time.deltaTime);
     }
 
     public void Init(float speedWalk)
     {
-        _speedWalk = speedWalk;
+        Speed = speedWalk;
     }
 
     public void SetRoute(Transform[] points)
@@ -40,5 +49,13 @@ public class MoverOnPoints : MonoBehaviour
     public void ResetMover()
     {
         _currentIndex = _startIndex;
+    }
+
+    private Vector2 CalculateOffset(Transform target)
+    {
+        Vector2 offset = target.transform.position - transform.position;
+        Direction = offset.x;
+
+        return offset;
     }
 }
