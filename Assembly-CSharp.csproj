@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Spawners\SpawnerFirstAndKit.cs" />
-    <Compile Include="Assets\Scripts\Characters\FinderOfPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\GroundDetector.cs" />
     <Compile Include="Assets\Scripts\Player\ItemsPicker.cs" />
     <Compile Include="Assets\Scripts\Characters\AttackerEnemy.cs" />
@@ -69,12 +68,14 @@
     <Compile Include="Assets\Scripts\Items\Coin.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimatorData.cs" />
+    <Compile Include="Assets\Scripts\Characters\PlayerFinder.cs" />
     <Compile Include="Assets\Scripts\Player\Inventory.cs" />
     <Compile Include="Assets\Scripts\Spawners\PointSpawnEnemy.cs" />
     <Compile Include="Assets\Scripts\Items\FirstAndKit.cs" />
     <Compile Include="Assets\Scripts\Movers\Mover2D.cs" />
     <Compile Include="Assets\Scripts\Spawners\SpawnerCoin.cs" />
     <Compile Include="Assets\Scripts\Player\InputReader.cs" />
+    <Compile Include="Assets\Scripts\Items\ICollectable.cs" />
     <Compile Include="Assets\Scripts\Characters\Enemy.cs" />
     <Compile Include="Assets\Scripts\Spawners\SpawnerEnemy.cs" />
     <Compile Include="Assets\Scripts\Movers\MoverOnPoints.cs" />

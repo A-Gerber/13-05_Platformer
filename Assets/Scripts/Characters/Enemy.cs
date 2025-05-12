@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(MoverOnPoints), typeof(Flipper2D))]
-[RequireComponent(typeof(Health), typeof(AttackerEnemy), typeof(FinderOfPlayer))]
+[RequireComponent(typeof(Health), typeof(AttackerEnemy), typeof(PlayerFinder))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speedWalk = 0.5f;
@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private Flipper2D _flipper;
     private AttackerEnemy _attackerEnemy;
-    private FinderOfPlayer _finderOfPlayer;
+    private PlayerFinder _finderOfPlayer;
 
     private Player _target;
 
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
         _flipper = GetComponent<Flipper2D>();
         Health = GetComponent<Health>();
         _attackerEnemy = GetComponent<AttackerEnemy>();
-        _finderOfPlayer = GetComponent<FinderOfPlayer>();
+        _finderOfPlayer = GetComponent<PlayerFinder>();
     }
 
     private void Start()
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (_finderOfPlayer.HaveFoundTarget(out _target, MoverOnPoints.Direction))
+        if (_finderOfPlayer.TryFindTarget(out _target, MoverOnPoints.Direction))
         {
             MoverOnPoints.Init(_speedRun);
             MoverOnPoints.FollowTarget(_target);

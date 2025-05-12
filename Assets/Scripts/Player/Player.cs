@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _itemsPicker.PickUpedCoin += AddCoin;
-        _itemsPicker.PickUpedFirstAndKit += Heal;
+        _itemsPicker.FirstAidKitCollected += Heal;
 
         _inputReader.Attacked += Attack;
         _inputReader.Jumped += Jump;
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         _itemsPicker.PickUpedCoin -= AddCoin;
-        _itemsPicker.PickUpedFirstAndKit -= Heal;
+        _itemsPicker.FirstAidKitCollected -= Heal;
 
         _inputReader.Attacked -= Attack;
         _inputReader.Jumped -= Jump;
