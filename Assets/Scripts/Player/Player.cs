@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(Mover2D), typeof(InputReader))]
+[RequireComponent(typeof(AnimationsHandler), typeof(Mover2D), typeof(InputReader))]
 [RequireComponent(typeof(GroundDetector), typeof(Flipper2D), typeof(Inventory))]
 [RequireComponent(typeof(ItemsPicker), typeof(Health), typeof(AttackerPlayer))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed = 3.0f;
 
-    private Animator _animator;
+    private AnimationsHandler _animationsHandler;
     private Mover2D _mover;
     private InputReader _inputReader;
     private GroundDetector _groundDetector;
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _animationsHandler = GetComponent<AnimationsHandler>();
         _mover = GetComponent<Mover2D>();
         _inputReader = GetComponent<InputReader>();
         _groundDetector = GetComponent<GroundDetector>();
@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
         _itemsPicker.FirstAidKitCollected += Heal;
 
         _inputReader.Attacked += Attack;
-        _inputReader.Jumped += Jump;
     }
 
     private void OnDisable()
@@ -52,7 +51,6 @@ public class Player : MonoBehaviour
         _itemsPicker.FirstAidKitCollected -= Heal;
 
         _inputReader.Attacked -= Attack;
-        _inputReader.Jumped -= Jump;
     }
 
     private void Start()
@@ -60,18 +58,26 @@ public class Player : MonoBehaviour
         _mover.SetSpeed(_maxSpeed);
     }
 
+    private void FixedUpdate()
+    {
+        if (_inputReader.GetIsJump() && _groundDetector.IsGround)
+        {
+            _mover.Jump();
+        }
+    }
+
     private void Update()
     {
         _mover.Move(_inputReader.Direction);
         _flipper.SetDirection(_inputReader.Direction);
 
-        _animator.SetFloat(PlayerAnimatorData.Params.Speed, Mathf.Abs(_maxSpeed * _inputReader.Direction));
+        _animationsHandler.SetMovement(Mathf.Abs(_inputReader.Direction * _maxSpeed));
     }
 
     private void Attack()
     {
         _attackerPlayer.SetAttack(true);
-        _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
+        _animationsHandler.TriggerAttack();
         StartCoroutine(StopAnimationOverTime());
     }
 
@@ -79,15 +85,7 @@ public class Player : MonoBehaviour
     {
         yield return _wait;
         _attackerPlayer.SetAttack(false);
-        _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
-    }
-
-    private void Jump()
-    {
-        if(_groundDetector.IsGround)
-        {
-            _mover.Jump();
-        }
+        _animationsHandler.TriggerAttack();
     }
 
     private void Heal(float healing)

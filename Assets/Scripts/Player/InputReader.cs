@@ -10,17 +10,8 @@ public class InputReader : MonoBehaviour
     private bool _isJump;
 
     public event Action Attacked;
-    public event Action Jumped;
 
     public float Direction { get; private set; } = 0;
-
-    private void FixedUpdate()
-    {
-        if(GetIsJump())
-        {
-            Jumped?.Invoke();
-        }
-    }
 
     private void Update()
     {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MoverOnPoints : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class MoverOnPoints : MonoBehaviour
         _currentIndex = _startIndex;
     }
 
-    public void Move ()
+    public void Move()
     {
-        if (CalculateOffset(_points[_currentIndex]).sqrMagnitude < _closeDistance * _closeDistance)
+        if (IsMovingToTarget(_points[_currentIndex]) == false)
         {
             _currentIndex = ++_currentIndex % _points.Length;
         }
@@ -28,12 +29,10 @@ public class MoverOnPoints : MonoBehaviour
 
     public void FollowTarget(Player target)
     {
-        if (CalculateOffset(target.transform).sqrMagnitude < _closeDistance * _closeDistance)
+        if (IsMovingToTarget(target.transform))
         {
-            return;
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Speed * Time.deltaTime);
         }
-
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Speed * Time.deltaTime);
     }
 
     public void Init(float speedWalk)
@@ -51,11 +50,17 @@ public class MoverOnPoints : MonoBehaviour
         _currentIndex = _startIndex;
     }
 
-    private Vector2 CalculateOffset(Transform target)
+    private bool IsMovingToTarget(Transform target)
     {
+        bool isMovingToTarget = true;
         Vector2 offset = target.transform.position - transform.position;
         Direction = offset.x;
 
-        return offset;
+        if (offset.sqrMagnitude < _closeDistance * _closeDistance)
+        {
+            isMovingToTarget = false;
+        }
+
+        return isMovingToTarget;
     }
 }

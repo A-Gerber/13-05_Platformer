@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(MoverOnPoints), typeof(Flipper2D))]
+[RequireComponent(typeof(AnimationsHandler), typeof(MoverOnPoints), typeof(Flipper2D))]
 [RequireComponent(typeof(Health), typeof(AttackerEnemy), typeof(PlayerFinder))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speedWalk = 0.5f;
     [SerializeField] private float _speedRun = 3.0f;
 
-    private Animator _animator;
+    private AnimationsHandler _animationsHandler;
     private Flipper2D _flipper;
     private AttackerEnemy _attackerEnemy;
     private PlayerFinder _finderOfPlayer;
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _animationsHandler = GetComponent<AnimationsHandler>();
         MoverOnPoints = GetComponent<MoverOnPoints>();
         _flipper = GetComponent<Flipper2D>();
         Health = GetComponent<Health>();
@@ -51,14 +51,13 @@ public class Enemy : MonoBehaviour
 
         _flipper.SetDirection(MoverOnPoints.Direction);
 
-
         if (Health.IsAlive == false)
         {
             Died?.Invoke(this);
         }
 
-        _animator.SetBool(EnemyAnimatorData.Params.IsAttack, _attackerEnemy.IsAttack);
-        _animator.SetFloat(EnemyAnimatorData.Params.Speed, MoverOnPoints.Speed);
+        _animationsHandler.SetAttackStatus(_attackerEnemy.IsAttack);
+        _animationsHandler.SetMovement(MoverOnPoints.Speed);
     }
 
     public void SetBirthplace(Vector3 position)
