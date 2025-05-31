@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class PointSpawnEnemy : MonoBehaviour
 {
+    [SerializeField] private Canvas _canvas;
     [SerializeField] private Enemy _prefab;
     [SerializeField] private Transform[] _waypoints;
 
     public Enemy CreateEnemy()
     {
-        Enemy enemy = Instantiate(_prefab);
+        Enemy enemy = Instantiate(_prefab, _canvas.transform);
         enemy.MoverOnPoints.SetRoute(_waypoints);
         enemy.SetBirthplace(transform.position);
 

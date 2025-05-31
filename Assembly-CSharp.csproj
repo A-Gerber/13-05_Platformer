@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Player\AttackerPlayer.cs" />
     <Compile Include="Assets\Scripts\Items\Coin.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\IndicatorHealth\Scripts\HealthView.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimatorData.cs" />
     <Compile Include="Assets\Scripts\Characters\PlayerFinder.cs" />
     <Compile Include="Assets\Scripts\Player\Inventory.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Scripts\Spawners\SpawnerEnemy.cs" />
     <Compile Include="Assets\Scripts\Movers\MoverOnPoints.cs" />
     <Compile Include="Assets\Scripts\Player\Health.cs" />
+    <Compile Include="Assets\IndicatorHealth\Scripts\SmoothSliderHealthView.cs" />
     <Compile Include="Assets\Scripts\Characters\EnemyAnimatorData.cs" />
     <Compile Include="Assets\Scripts\Movers\Flipper2D.cs" />
   </ItemGroup>

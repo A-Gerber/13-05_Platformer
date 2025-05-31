@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Flipper2D : MonoBehaviour
 {
+    [SerializeField] private Transform _rotatingModel;
+
     private Quaternion _rightRotate = Quaternion.Euler(new Vector2(0, 0));
     private Quaternion _leftRotate = Quaternion.Euler(new Vector2(0, 180));
     private float _direction = 1;
@@ -10,11 +12,11 @@ public class Flipper2D : MonoBehaviour
     {
         if (_direction > 0)
         {
-            transform.rotation = _rightRotate;
+            _rotatingModel.transform.rotation = _rightRotate;
         }
         else if (_direction < 0)
         {
-            transform.rotation = _leftRotate;
+            _rotatingModel.transform.rotation = _leftRotate;
         }
     }
 

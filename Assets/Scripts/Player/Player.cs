@@ -4,9 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationsHandler), typeof(Mover2D), typeof(InputReader))]
 [RequireComponent(typeof(GroundDetector), typeof(Flipper2D), typeof(Inventory))]
 [RequireComponent(typeof(ItemsPicker), typeof(Health), typeof(AttackerPlayer))]
+//[RequireComponent(typeof(Health), typeof(AttackerPlayer))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed = 3.0f;
+    //[SerializeField] private ItemsPicker _itemsPicker;
 
     private AnimationsHandler _animationsHandler;
     private Mover2D _mover;

@@ -1,14 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class AnimationsHandler : MonoBehaviour
 {
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    [SerializeField] private Animator _animator;
 
     public void SetMovement(float value) => _animator.SetFloat(PlayerAnimatorData.Params.Speed, value);
 
