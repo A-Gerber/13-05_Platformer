@@ -4,11 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationsHandler), typeof(Mover2D), typeof(InputReader))]
 [RequireComponent(typeof(GroundDetector), typeof(Flipper2D), typeof(Inventory))]
 [RequireComponent(typeof(ItemsPicker), typeof(Health), typeof(AttackerPlayer))]
-//[RequireComponent(typeof(Health), typeof(AttackerPlayer))]
+[RequireComponent(typeof(VampirismSkill))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed = 3.0f;
-    //[SerializeField] private ItemsPicker _itemsPicker;
 
     private AnimationsHandler _animationsHandler;
     private Mover2D _mover;
@@ -18,6 +17,7 @@ public class Player : MonoBehaviour
     private Inventory _inventory;
     private ItemsPicker _itemsPicker;
     private AttackerPlayer _attackerPlayer;
+    private VampirismSkill _vampirism;
 
     private float _timeOfAttack = 0.22f;
     private WaitForSeconds _wait;
@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
         _itemsPicker = GetComponent<ItemsPicker>();
         Health = GetComponent<Health>();
         _attackerPlayer = GetComponent<AttackerPlayer>();
+        _vampirism = GetComponent<VampirismSkill>();
 
         _wait = new WaitForSeconds(_timeOfAttack);
     }
@@ -44,6 +45,8 @@ public class Player : MonoBehaviour
         _itemsPicker.PickUpedCoin += AddCoin;
         _itemsPicker.FirstAidKitCollected += Heal;
 
+        _vampirism.HealedPlayer += Heal;
+
         _inputReader.Attacked += Attack;
     }
 
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour
     {
         _itemsPicker.PickUpedCoin -= AddCoin;
         _itemsPicker.FirstAidKitCollected -= Heal;
+
+        _vampirism.HealedPlayer -= Heal;
 
         _inputReader.Attacked -= Attack;
     }

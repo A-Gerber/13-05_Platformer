@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SmoothSliderHealthView : HealthView
 {
-    private const float Coefficient = 4f;
+    private const float Coefficient = 1f;
     private const float Delay = 0.01f;
 
     [SerializeField] private Slider _slider;
