@@ -32,7 +32,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void Heal(float healing)
+    public void TakeHealth(float healing)
     {
         if (healing > 0)
         {
@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
         _currentCount = MaxCount;
     }
 
-    public void ResetIndicatorHealth()
+    public void ResetIndicator()
     {
         Changed?.Invoke(_currentCount);
     }

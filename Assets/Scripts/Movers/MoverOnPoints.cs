@@ -51,15 +51,9 @@ public class MoverOnPoints : MonoBehaviour
 
     private bool IsMovingToTarget(Transform target)
     {
-        bool isMovingToTarget = true;
         Vector2 offset = target.transform.position - transform.position;
         Direction = offset.x;
 
-        if (offset.sqrMagnitude < _closeDistance * _closeDistance)
-        {
-            isMovingToTarget = false;
-        }
-
-        return isMovingToTarget;
+        return offset.sqrMagnitude > _closeDistance * _closeDistance;
     }
 }

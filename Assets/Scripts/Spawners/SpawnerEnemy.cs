@@ -74,7 +74,7 @@ public class SpawnerEnemy : MonoBehaviour
     {
         enemy.transform.position = enemy.Birthplace;
         enemy.gameObject.SetActive(true);
-        enemy.Health.ResetIndicatorHealth();
+        enemy.Health.ResetIndicator();
 
         enemy.Died += ReleaseEnemy;
     }

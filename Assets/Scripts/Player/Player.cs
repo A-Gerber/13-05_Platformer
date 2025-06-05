@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
 
     private void Heal(float healing)
     {
-        Health.Heal(healing);
+        Health.TakeHealth(healing);
     }
 
     private void AddCoin()

@@ -5,17 +5,19 @@ using UnityEngine.UI;
 
 public class VampirismSkill : MonoBehaviour
 {
+    private const float ErrorRate = 0.005f;
+
     [SerializeField] private Button _button;
+    [SerializeField] private Transform _vampireAura;
 
     private EnemyDetector _enemyDetector = new();
-    private Enemy _target;
     private WaitForSeconds _wait;
+    private WaitForSeconds _waitCooldown;
 
-    private float _sumDamage = 0f;
-    private float _damage = 0.5f;
+    private float _damage = 5f;
     private float _healCoefficient = 0.5f;
     private float _cooldown = 4f;
-    private float _delay = 2f;
+    private float _delay = 0.5f;
 
     private bool _isAbsorb = false;
     private bool _isCooldown = false;
@@ -26,11 +28,12 @@ public class VampirismSkill : MonoBehaviour
 
     public float ActionTime { get; private set; } = 6f;
     public float Radius { get; private set; } = 4f;
-    public  Vector3 Offset{ get; private set; } = new Vector2(0, 1);
+    public Vector3 Offset { get; private set; } = new Vector2(0, 1);
 
     private void Awake()
     {
         _wait = new WaitForSeconds(_delay);
+        _waitCooldown = new WaitForSeconds(_cooldown);
     }
 
     private void OnEnable()
@@ -43,15 +46,6 @@ public class VampirismSkill : MonoBehaviour
         _button.onClick.RemoveListener(AbsorbOfLife);
     }
 
-    private void FixedUpdate()
-    {
-        if (_isAbsorb && _enemyDetector.TryGetNearestEnemyInRadius(out _target, transform.position + Offset, Radius))
-        {
-            _target.Health.TakeDamage(_damage);
-            _sumDamage += _damage;
-        }
-    }
-
     private void AbsorbOfLife()
     {
         if (_isCooldown || _isAbsorb)
@@ -59,36 +53,39 @@ public class VampirismSkill : MonoBehaviour
             return;
         }
 
-        _isAbsorb = true;
-        StartCoroutine(Wait(ActionTime));
+        StartCoroutine(AbsorbOfLifeOverTime());
         UsedSkill?.Invoke();
     }
 
-    private void UseFinalAct ()
+    private IEnumerator AbsorbOfLifeOverTime()
     {
-        if (_isAbsorb)
-        {
-            HealedPlayer?.Invoke(_sumDamage * _healCoefficient);
-            _sumDamage = 0;
-            _isAbsorb = false;
-            _isCooldown = true;
-            FinishedSkill?.Invoke(_cooldown);
+        _isAbsorb = true;
+        float time = 0;
+        Enemy target;
 
-            StartCoroutine(Wait(_cooldown));
-        }
-        else
-        {
-            _isCooldown = false;
-        }       
-    }
-
-    private IEnumerator Wait(float time)
-    {
-        for (int i = 0; i < time / _delay; i++)
+        while (ActionTime - time > ErrorRate)
         {
             yield return _wait;
+
+            if (_isAbsorb && _enemyDetector.TryGetNearestEnemyInRadius(out target, transform.position + Offset, Radius))
+            {
+                target.Health.TakeDamage(_damage);
+                HealedPlayer?.Invoke(_damage * _healCoefficient);
+            }
+
+            time += _delay;
         }
 
-        UseFinalAct();
+        _isAbsorb = false;
+        _isCooldown = true;
+        FinishedSkill?.Invoke(_cooldown);
+
+        StartCoroutine(WaitCooldown());
+    }
+
+    private IEnumerator WaitCooldown()
+    {
+        yield return _waitCooldown;
+        _isCooldown = false;
     }
 }

@@ -9,7 +9,7 @@ public class VampirismView : MonoBehaviour
     private const float ErrorRate = 0.005f;
 
     [SerializeField] private Slider _slider;
-    [SerializeField] private SpriteRenderer _prefab;
+    [SerializeField] private SpriteRenderer _vampireAura;
     [SerializeField] private VampirismSkill _vampirismSkill;
 
     private WaitForSeconds _wait;
@@ -20,6 +20,8 @@ public class VampirismView : MonoBehaviour
     {
         _wait = new WaitForSeconds(_vampirismSkill.ActionTime);
         _waitForSlider = new WaitForSeconds(_delayForSlider);
+
+        _vampireAura.transform.localScale *= (_vampirismSkill.Radius + _vampirismSkill.Radius);
     }
 
     private void OnEnable()
@@ -36,12 +38,10 @@ public class VampirismView : MonoBehaviour
 
     public void RenderSkill()
     {
-        SpriteRenderer sprite = Instantiate(_prefab, _vampirismSkill.transform);
-        sprite.transform.localScale *= (_vampirismSkill.Radius + _vampirismSkill.Radius);
-        sprite.transform.position += _vampirismSkill.Offset;
+        _vampireAura.gameObject.SetActive(true);
 
         StartCoroutine(ChangeSliderValue(MinValue, _vampirismSkill.ActionTime));
-        StartCoroutine(DestroySpriteOverTime(sprite));
+        StartCoroutine(DisableVampireAuraOverTime());
     }
 
     public void RenderCooldownSkill(float cooldown)
@@ -62,9 +62,9 @@ public class VampirismView : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroySpriteOverTime(SpriteRenderer sprite)
+    private IEnumerator DisableVampireAuraOverTime()
     {
         yield return _wait;
-        Destroy(sprite.gameObject);
+        _vampireAura.gameObject.SetActive(false);
     }
 }

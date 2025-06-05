@@ -25,14 +25,13 @@ public class EnemyDetector
             {
                 if (hit != null)
                 {
-                    if (hit.TryGetComponent<Enemy>(out _))
-                    {
-                        float distance = Vector2.Distance(position, hit.transform.position);
+                    float sqrDistance = position.SqrDistance(hit.transform.position);
 
-                        if (distance < closestDistance)
+                    if (sqrDistance < closestDistance)
+                    {
+                        if (hit.TryGetComponent(out enemy))
                         {
-                            enemy = hit.GetComponent<Enemy>();
-                            closestDistance = distance;
+                            closestDistance = sqrDistance;
                             isGot = true;
                         }
                     }
