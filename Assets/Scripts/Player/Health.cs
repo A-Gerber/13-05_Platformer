@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
 
     public float MaxCount { get; private set; } = 100f;
     public bool IsAlive => _currentCount > MinCount;
+    public float GetCount => _currentCount;
 
     private void Awake()
     {

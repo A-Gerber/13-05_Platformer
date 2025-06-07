@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
         _vampirism.HealedPlayer += Heal;
 
         _inputReader.Attacked += Attack;
+        _inputReader.UsedVampirism += UseVampirism;
     }
 
     private void OnDisable()
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
         _vampirism.HealedPlayer -= Heal;
 
         _inputReader.Attacked -= Attack;
+        _inputReader.UsedVampirism -= UseVampirism;
     }
 
     private void Start()
@@ -80,6 +82,8 @@ public class Player : MonoBehaviour
 
         _animationsHandler.SetMovement(Mathf.Abs(_inputReader.Direction * _maxSpeed));
     }
+
+    private void UseVampirism() => _vampirism.AbsorbOfLife();
 
     private void Attack()
     {

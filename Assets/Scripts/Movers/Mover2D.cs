@@ -22,7 +22,6 @@ public class Mover2D : MonoBehaviour
 
     public void Move(float direction)
     {
-        //transform.Translate(_defaultDirection * Mathf.Abs(direction) * _speed * Time.deltaTime);
         transform.Translate(_defaultDirection * direction * _speed * Time.deltaTime);
     }
 

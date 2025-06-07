@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 641
     height: 508
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 24}
   m_Panes:
   - {fileID: 24}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 46
+  controlID: 61
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 44
+  controlID: 118
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -177,8 +177,8 @@ MonoBehaviour:
     y: 508
     width: 1532
     height: 439
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 23}
   m_Panes:
   - {fileID: 19}
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 45
+  controlID: 60
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -422,7 +422,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -14192
+  m_LastSelectedObjectID: 26842
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -742,7 +742,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts/Player
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -750,16 +750,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts/Player
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Unity Repos\13-05_Platformer
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 30700000
-    m_LastClickedID: 28720
-    m_ExpandedIDs: 000000000a7000003470000000ca9a3bffffff7f
+    m_SelectedIDs: 8e700000
+    m_LastClickedID: 28814
+    m_ExpandedIDs: 00000000147000004270000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -787,7 +787,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000000a700000
+    m_ExpandedIDs: 0000000014700000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -812,24 +812,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 90c8ffff
-    m_LastClickedInstanceID: -14192
+    m_SelectedInstanceIDs: da680000
+    m_LastClickedInstanceID: 26842
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000e25e0000de5e0000b861000098640000fe710000f271000002720000f6710000fa710000f0710000fc7100000672000004720000f871000000720000f4710000548000001c9d0000bca900000c6400002c6b00002a6b00007e5e0000c25d000052880000ee660000ec870000848e00008c8e0000726900006e690000706900004a670000885e0000886000005c63000062840000ae86000048840000c4870000ca87000076850000d4630000ce630000d8630000d2630000125c0000aa5b000078630000627200005c720000f45900003e840000005b0000dc5a0000d65a00002c5f000000000000465e0000385f00001c5f00002a5f0000485f00006c5d0000a47e000090b2000034b5000038b500003eb5000036b500006cd0000088b80000a46a00005a6600002e6a000054860000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Vector3Extensions
-      m_OriginalName: Vector3Extensions
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 28844
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 7}
     m_CreateAssetUtility:
@@ -927,9 +927,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 90c8ffff
-      m_LastClickedID: -14192
-      m_ExpandedIDs: 98cdffff04fbffffb4680000d46800002c690000
+      m_SelectedIDs: da680000
+      m_LastClickedID: 26842
+      m_ExpandedIDs: 16fbffffb468000032690000a8690000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

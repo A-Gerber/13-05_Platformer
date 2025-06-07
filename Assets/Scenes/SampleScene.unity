@@ -1443,6 +1443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6727320d302de6e41802604264189726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vampirismButton: {fileID: 2072680253}
 --- !u!114 &381412245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1561,7 +1562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc1a3add83e4cb4a8fe010ffa4ed2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 2072680253}
   _vampireAura: {fileID: 292682799}
 --- !u!1 &386600674
 GameObject:
